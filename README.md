@@ -1,6 +1,6 @@
 # Damn Aliens! An HTML5 game developed with CraftyJS
 Damn Aliens! is an online game built with CraftyJS' game engine. It uses several features of HTML5, like: canvas, IndexedDB and the audio API.
-Fork the [project](http://github.com/talitapagani/DamnAliens)
+Fork the [project](http://github.com/talitapagani/DamnAliens).
 
 ***
 
