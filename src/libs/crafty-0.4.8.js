@@ -7381,7 +7381,7 @@ Crafty.storage = (function () {
 					stores.push('cache');
 				}
 				if (db == null) {
-					var request = indexedDB.open(gameName, "Database for " + gameName);
+					var request = indexedDB.open(gameName);
 					request.onsuccess = function (e) {
 						db = e.target.result;
 						createStores();
@@ -7398,7 +7398,7 @@ Crafty.storage = (function () {
 				// get all the timestamps for existing keys
 				function getTimestamps() {
 					try {
-						var trans = db.transaction(['save'], "readonly"),
+						var trans = db.transaction(['save'], IDBTransaction.readonly),
 						store = trans.objectStore('save'),
 						request = store.getAll();
 						request.onsuccess = function (e) {
@@ -7433,7 +7433,7 @@ Crafty.storage = (function () {
 				var str = serialize(data), t = ts();
 				if (type == 'save')	saveExternal(key, str, t);
 				try {
-					var trans = db.transaction([type], "readwrite"),
+					var trans = db.transaction([type], IDBTransaction.readwrite),
 					store = trans.objectStore(type),
 					request = store.put({
 						"data": str,
@@ -7452,7 +7452,7 @@ Crafty.storage = (function () {
 					return;
 				}
 				try {
-					var trans = db.transaction([type], "readonly"),
+					var trans = db.transaction([type], IDBTransaction.readonly),
 					store = trans.objectStore(type),
 					request = store.get(key);
 					request.onsuccess = function (e) {
@@ -7469,7 +7469,7 @@ Crafty.storage = (function () {
 					setTimeout(function () { Crafty.storage.getAllkeys(type, callback); }, 1);
 				}
 				try {
-					var trans = db.transaction([type], "readonly"),
+					var trans = db.transaction([type], IDBTransaction.readonly),
 					store = trans.objectStore(type),
 					request = store.getCursor(),
 					res = [];
