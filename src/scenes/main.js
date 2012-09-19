@@ -82,7 +82,7 @@ Crafty.scene("main", function() {
 		function setLifes(_amount) {
 			var _w = 16, _h = 16;
 			for (var i = 0, posX = 10, posY = 10; i < _amount; i++, posX += 21) {
-				lifes[i] = Crafty.e("2D, "+gameContainer.conf.get('renderType')+", DOM, Image, vida")
+				lifes[i] = Crafty.e("2D, DOM, Image, vida")
 		            				.attr({w: _w, h: _h, x: posX, y: posY, z: 1000})
 		            				.image("web/images/life.png");
 		        
