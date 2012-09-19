@@ -81,17 +81,22 @@ Crafty.scene("main", function() {
 		 * */
 		function setLifes(_amount) {
 			var _w = 16, _h = 16;
-			for (var i = 0, posX = 10, posY = 10; i < _amount; i++, posX += 21) {
-				lifes[i] = Crafty.e("2D, "+gameContainer.conf.get('renderType')+", DOM, Image, vida")
-		            				.attr({w: _w, h: _h, x: posX, y: posY, z: 1000})
-		            				.image("web/images/life.png");
-		        
-				/* Fix - a largura e altura são definidas corretamente através do método attr() apenas no primeiro item, nos demais
-				 * é preciso definir a largura e altura individualmente */
-				lifes[i].w = _w;
-				lifes[i].h = _h;
-			}
-			lifes_remaining = _amount;
+				for (var i = 0, posX = 10, posY = 10; i < _amount; i++, posX += 21) {
+					try {
+						lifes[i] = Crafty.e("2D, DOM, Image, vida")
+				            				.attr({w: _w, h: _h, x: posX, y: posY, z: 1000})
+				            				.image("web/images/life.png");
+				        
+						/* Fix - a largura e altura são definidas corretamente através do método attr() apenas no primeiro item, nos demais
+						 * é preciso definir a largura e altura individualmente */
+						lifes[i].w = _w;
+						lifes[i].h = _h;
+					
+					} catch (e) {
+						console.error(e);
+					}
+				}
+				lifes_remaining = _amount;
 		}
 		
 		/*
