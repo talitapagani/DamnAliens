@@ -24,6 +24,9 @@ Crafty.scene("main", function() {
 		infc['disparos'] 		= new CustomText({'x': 650, 'y': 50, 'w': 40, 'h': 12, 'text': 'Disparos/Acertos: ', 'fontSize': '12'});
 		infc['disparos_num'] 	= new CustomText({'x': 750, 'y': 50, 'w': 40, 'h': 12, 'text': disparos+'/'+acertos, 'fontSize': '12'});
 		
+		Crafty.audio.add('ambient', "web/audio/game2.mp3");
+		Crafty.audio.add('levelup', "web/audio/levelup.wav");
+		
 		function criaExercito(numNaves, naveSpeed) {
 			exercito = 0;
 			
@@ -70,6 +73,9 @@ Crafty.scene("main", function() {
 			});
 			
 			criaExercito(_numNaves, _naveSpeed);
+			
+			Crafty.audio.stop();
+	        Crafty.audio.play("ambient",-1);
 		}
 		
 		/*
@@ -81,17 +87,22 @@ Crafty.scene("main", function() {
 		 * */
 		function setLifes(_amount) {
 			var _w = 16, _h = 16;
-			for (var i = 0, posX = 10, posY = 10; i < _amount; i++, posX += 21) {
-				lifes[i] = Crafty.e("2D, DOM, Image, vida")
-		            				.attr({w: _w, h: _h, x: posX, y: posY, z: 1000})
-		            				.image("web/images/life.png");
-		        
-				/* Fix - a largura e altura são definidas corretamente através do método attr() apenas no primeiro item, nos demais
-				 * é preciso definir a largura e altura individualmente */
-				lifes[i].w = _w;
-				lifes[i].h = _h;
-			}
-			lifes_remaining = _amount;
+				for (var i = 0, posX = 10, posY = 10; i < _amount; i++, posX += 21) {
+					try {
+						lifes[i] = Crafty.e("2D, DOM, Image, vida")
+				            				.attr({w: _w, h: _h, x: posX, y: posY, z: 1000})
+				            				.image("web/images/life.png");
+				        
+						/* Fix - a largura e altura são definidas corretamente através do método attr() apenas no primeiro item, nos demais
+						 * é preciso definir a largura e altura individualmente */
+						lifes[i].w = _w;
+						lifes[i].h = _h;
+					
+					} catch (e) {
+						console.error(e);
+					}
+				}
+				lifes_remaining = _amount;
 		}
 		
 		/*
@@ -121,6 +132,9 @@ Crafty.scene("main", function() {
 			 * Se não tiver mais nenhuma nave no palco, faz 2 verificações
 			 * */
 			if(exercito == 0) {
+				// Executa o áudio de LevelUp
+				Crafty.audio.stop();
+				setTimeout(function() {Crafty.audio.play("levelup",1)}, 500);
 				/*
 				 * Se não há mais nenhuma nave e o jogador está no último nível,
 				 * significa que ele venceu o jogo, então despacha o evento para a 
@@ -129,8 +143,12 @@ Crafty.scene("main", function() {
 				 * */
 				if (nivel == 3) {
 					//Encerra o jogo como vencedor e passa para a tela de 'Game Over'
-					gameContainer.conf.set({'gameOverStatus': "Você ganhou =)"});
-					Crafty.scene("gameover");
+					setTimeout(
+						function() {
+							gameContainer.conf.set({'gameOverStatus': "Você ganhou =)"});
+							Crafty.scene("gameover");
+						}
+						, 2000);
 				} else {
 					/*
 					 * Regras para level up:
@@ -138,7 +156,7 @@ Crafty.scene("main", function() {
 						 * Dobra o valor do tiro caso ele acerte a nave
 						 * Incrementa a velocidade das naves
 					 * */
-					setLevel(++nivel, (numNaves + 8), (valorAcerto * 2), (naveSpeed + 0.5));
+					setTimeout(function() {setLevel(++nivel, (numNaves + 8), (valorAcerto * 2), (naveSpeed + 0.5))}, 2000);
 				}
 			}
 		}, false);
@@ -170,19 +188,9 @@ Crafty.scene("main", function() {
 		 */
 		document.addEventListener("keydown", function(e) {
 			if(e.key == Crafty.keys['SPACE']) {
+				Crafty.audio.mute();
+				Crafty.audio.play("ambient",-1);
 				Crafty.pause();
-				if (Crafty.isPaused())
-				{
-					infc['pause_tween'] = new CustomText({'x': 0, 'y': 250, 'w': 800, 'h': 48, 'text': 'Pause II', 'fontSize': '48', textAlign: 'center'});
-				}
-				else
-				{
-					/*infc['pause_tween'].getEntity().addComponent("Tweener");
-					infc['pause_tween'].getEntity().tween({y: -48}, 'easeInBounce', 80, function() {
-						infc['pause_tween'].remove();
-					});*/
-					infc['pause_tween'].remove();
-				}
 			}
 		},false);
 		
@@ -200,10 +208,6 @@ Crafty.scene("main", function() {
 		setLevel(1, 8, 10, 1);
 		setLifes(3);
 		Crafty.storage.save('Placar', 'save', pontos); // Salva a pontuação inicial para que não haja problemas quando reiniciar o jogo
-		
-		Crafty.audio.stop();
-		Crafty.audio.add('ambient', "web/audio/game2.mp3");
-        Crafty.audio.play("ambient",-1);
 		
 	});
 
