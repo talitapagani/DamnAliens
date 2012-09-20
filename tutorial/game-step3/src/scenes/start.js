@@ -1,0 +1,5 @@
+Crafty.scene("start", function() {
+
+	
+
+});

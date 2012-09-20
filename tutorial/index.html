@@ -1,0 +1,1394 @@
+<!DOCTYPE html> 
+<!--
+  Copyright 2010 Google Inc.
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ 
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Chrome Developer Relations <chrome-devrel@googlegroups.com>
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+    <title>Desenvolvimento de Jogos com HTML5 utilizando a engine CraftyJS</title>
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+	<script type="text/javascript" src="scripts/shCore.js"></script>
+	<script type="text/javascript" src="scripts/shBrushJScript.js"></script>
+	<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+    <link href="css/slides.css" rel="stylesheet" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="css/shCore.css"/>
+	<link type="text/css" rel="Stylesheet" href="css/shThemeDefault.css" />
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+    
+  </head> 
+  <body>
+  	<a href="https://github.com/talitapagani"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 999;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+    <div class="presentation"> 
+      <div id="presentation-counter"></div> 
+      <div class="slides"> 
+        <div class="slide reduced"> 
+          <section class="middle"> 
+            <h2>Desenvolvimento de Jogos com HTML5</h2> 
+            <p>Utilizando a engine CraftyJS</p>
+            <p>Talita Pagani</p>
+            <p><small><a href="http://twitter.com/talitapagani">@talitapagani</a> / <a href="http://github.com/talitapagani">github.com/talitapagani</a></small></p>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section>
+          	<header>
+          		<h2>Introdução: Crafty</h2>
+          	</header> 
+            <ul class="bulleted"> 
+              <li>Engine escrita em JavaScript para o desenvolvimento de jogos em HTML5;</li> 
+              <li>Compatível com Canvas e <abbr title="Document Object Model">DOM</abbr> (<em>Document Object Model</em>);</li> 
+              <li>Vantagens:
+              	<ul class="bulleted">
+              		<li>Compatibilidade cross-browser em grande parte das <em>features</em></li>
+              		<li>Tamanho de arquivo: 88KB na versão <em>minified</em>;</li>
+              		<li>Modular;</li>
+              		<li>Open-source;</li>
+              		<li>Baseado em modelo de entidades, e coleção de componentes, semelhante a classes;</li>
+              		<li>Seletor de entidades semelhante ao seletor do jQuery;</li>
+              		<li>Suporta o uso de <em>tiles</em> e <em>sprite maps</em></li>
+              		<li>Extensível: <a href="http://craftycomponents.com/" target="_blank">http://craftycomponents.com/</a></li>
+              	</ul>
+              </li>
+            </ul> 
+          </section> 
+        </div> 
+ 
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Introdução: Crafty</h2>
+          	</header> 
+            <ul class="bulleted"> 
+              <li>Vantagens (cont.):
+              	<ul class="bulleted">
+              		<li>Recursos incluídos no core da engine, sem a necessidade de bibliotecas externas:
+              			<ul class="bulleted">
+              				<li>Asset Loading;</li>
+              				<li>Sprite Map;</li>
+              				<li>Áudio (<span class="off-comment">bugadinho</span>);</li>
+              				<li>Modelo isométrico;</li>
+              				<li>Colisões;</li>
+              				<li>etc.</li>
+              			</ul>
+              		</li>
+              	</ul>
+              </li>
+              <li>Documentação: <a href="http://craftyjs.com/api/" target="_blank">http://craftyjs.com/api/</a></li>
+            </ul> 
+          </section> 
+        </div> 
+ 
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Introdução: CraftyBoilerplate</h2>
+          	</header> 
+            <ul class="bulleted">
+            	<li><strong>Boilerplate:</strong> conjunto de arquivos que formam um modelo base para facilitar o desenvolvimento de alguma aplicação;</li>
+            	<li>Boilerplate &#8800; Framework
+            		<ul class="bulleted">
+            			<li>Boilerplates funcionam como uma sugestão de estrutura para iniciar seu projeto, porém, não têm a intenção de fornecer um conjunto de códigos e funcionalidades específicas.</li>
+            		</ul>
+            	</li>
+            	<li>O CraftyBoilerplate oferece uma estrutura de diretórios e arquivos padrões para iniciar o desenvolvimento de jogos através do Crafty. Além disso, ele traz bibliotecas adicionais para facilitar o desenvolvimento (Modernizr, Backbone, Underscore, RequireJS, jQuery)</li>
+           	</ul> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Baixando o CraftyBoilerplate</h2>
+          	</header> 
+            <ul class="bulleted">
+            	<li><a href="https://github.com/flywithmonkey/CraftyBoilerplate" target="_blank">https://github.com/flywithmonkey/CraftyBoilerplate</a></li>
+            	<li>Baixe a versão zipada deste projeto de exemplo</li>
+            	<li>O <strong>CraftyBoilerplate</strong> não vem com a versão mais atualizada do Crafty
+            		<ul class="bulleted">
+            			<li>Baixar a versão mais atualizada em <a href="http://craftyjs.com/" target="_blank">http://craftyjs.com/</a> (uncompressed, para fins de desenvolvimento)</li>
+            		</ul>
+            	</li>
+           	</ul> 
+          </section>
+        </div>
+        
+        <div class="slide reduced"> 
+          <section class="small"> 
+            <header>
+          		<h2>Estrutura de Arquivos</h2>
+          	</header> 
+            <ul class="bulleted">
+			  <li><strong>src:  arquivos .js</strong></li>
+			  <ul>
+			    <li><em>components: arquivos de componentes</em></li>
+			    <li><em>entities: arquivos que definem as entidades</em>
+				    <ul class="bulleted">
+				      <li>base
+					      <ul class="bulleted">
+					        <li>baseEntity.js</li>
+					      </ul>
+				      </li>
+				    </ul>
+			    </li>
+			    <li><em>interface: arquivos com entidades relativas à interface do jogo</em></li>
+			    <li><em>scenes: declaração  das cenas</em></li>
+			    <li><em>libs: bibliotecas</em></li>
+			    <li><em>config.js: configuração do jogo</em></li>
+			    <li><em>game.js: arquivo principal do jogo</em></li>
+			    <li><em>sprites.js: definição dos elementos do jogo</em></li>
+			  </ul>
+			  <li><strong>web: imagens e folhas de estilo</strong>
+				  <ul class="bulleted">
+				    <li>audio</li>
+				    <li>css</li>
+				    <li>images</li>
+				  </ul>
+			  </li>
+			  <li><strong>index.html: container do game</strong></li>
+			</ul>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Bibliotecas Auxiliares</h2>
+          	</header> 
+            <ul class="bulleted">
+            	<li><strong>Modernizr:</strong> identifica suporte do navegador a recursos de HTML5/CSS3;</li>
+            	<li><strong>Backbone:</strong> para criação de modelos semelhantes a classes (neste caso, é usado para encapsular as entidades);</li>
+            	<li><strong>Underscore:</strong> coletânea de funções, dependência para o Backbone;</li>
+            	<li><strong>RequireJS:</strong> carregamento sob demanda e assíncrono de outros arquivos .js;</li>
+            	<li><strong>jQuery</strong>.</li>
+           	</ul> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>O jogo</h2>
+          	</header> 
+            <ul class="bulleted">
+            	<li>Baseado no clássico arcade <strong>Space Invaders</strong></li>
+            	<li>Canvas, mas alguns elementos em DOM (principalmente textos)</li>
+            	<li>Cenas (telas): <em>Start Screen, Main, Game Over Screen</em></li>
+            	<li>Movimentos: controle por teclado, enterframe</li>
+            	<li>Sprites: tiles, criação de entidades e animações</li>
+            	<li>Detecção de colisões</li>
+            	<li>Áudio</li>
+            	<li>Eventos customizados</li>
+            	<li>Score: armazenamento e persistência de dados com IndexedDB</li>
+           	</ul> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section>
+          	<button type="button" id="CraftyJSGame" class="button">Executar</button>
+          	<div class="CraftyJSGame iframe"></div> 
+          </section>
+        </div>
+
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Configurações iniciais: index.html</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	  
+            	  gameContainer = {
+				      env : 'dev', // ambiente
+				      gameVersion : '0.0.1', // versão (usado para controle de cache)
+				      scene : 'main' // cena inicial após a tela de loading
+				  },
+				  sc    = [], // container para elementos de cena
+				  infc  = []  // container para elementos de interface
+				  
+            ]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Criando os sprites: /src/sprites.js</h2>
+          	</header> 
+            <ul class="bulleted">
+            	<li>Define uma "classe" denominada Sprite;</li>
+            	<li>Define uma ou mais coleções de sprites (tiles) do jogo.</li>
+           	</ul> 
+           	<script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+           		'sprites_name' : {
+			         'file' : 'path/to/file',
+			         'tile' : width,
+			         'tileh' : height,
+			         'elements': {
+			             'sprite_name' : [0, 0]
+			         }
+			    },
+           	]]></script>
+           	<ul class="bulleted">
+            	<li>Sprites a serem utilizadas:</li>
+           	</ul>
+           	<div class="images">
+           		<img src="CraftyJSGame/web/images/sprites.png" />
+           		<img src="CraftyJSGame/web/images/buttons-sprite.png" />
+           	</div>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Criando os sprites: /src/sprites.js (cont.)</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	Sprites = Backbone.Model.extend({
+				    defaults: {
+				        images:{
+				            'sprites' : {
+				                 'file' : 'web/images/sprites.png',
+				                 'tile' : 64,
+				                 'tileh' : 64,
+				                 'elements': {
+				                     'heroi' : [0, 0],
+				                     'nave'  : [1, 0],
+				                     'tiro'  : [2, 0]
+				                 },
+				            },
+				            'buttons' : {
+				                 'file' : 'web/images/buttons-sprite.png',
+				                 'tile' : 300,
+				                 'tileh' : 45,
+				                 'elements': {
+				                     'btnNormal' : [0, 0],
+				                     'btnHover'  : [0, 1],
+				                     'btnActive' : [0, 2]
+				                 },
+				            },
+				        }
+				    },
+				    ...
+				});
+           	]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Inicializando o jogo</h2>
+          	</header> 
+            <ul class="bulleted">
+            	<li>Criando o stage: <code class="inline-code">Crafty.init([Number width, Number height])</code></li>
+            	<li>Criando o elemento canvas: <code class="inline-code">Crafty.canvas.init()</code></li>
+            	<li>Requisição assíncrona de arquivos: <code class="inline-code">require(Array elements, Function callback);</code></li>
+            	<li>Configuração e inicialização de cenas: <code class="inline-code">Crafty.scene(String sceneName, Function init[, Function uninit])</code></li>
+            	<li>Entidades e componentes: <code class="inline-code">Crafty.e(String componentList)</code>
+            		<ul class="bulleted">
+            			<li><strong>Componentes:</strong> semelhante a <em>imports</em> (ou também herança múltipla). Aumentam a funcionalidade da entidade, adicionando propriedades e métodos do componente à entidade. Exemplos de componentes: <em>2D, Multiway, Keyboard, Collision, SpriteAnimation</em>.</li>
+            			<li>Criação de componentes customizados: <code class="inline-code">Crafty.c(String name, Object component)</code></li>
+            		</ul>
+            	</li>
+           	</ul> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Inicializando o jogo: /src/game.js</h2>
+          	</header> 
+             <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+             	window.onload = function() {
+        
+				    ...
+				    
+					// 800px de largura e 600px de altura
+					Crafty.init(800, 600);
+					// Cria o elemento canvas
+					Crafty.canvas.init();
+					// Define o plano de fundo do stage
+					Crafty.background("url('web/images/bg.png')");
+					
+					// Realiza a requisição destes arquivos.
+					// Ao terminar de carregá-los executa a função definida
+					require([
+					         "src/sprites.js?v="+version+"",
+					         "src/config.js?v="+version+"",
+					], function() {
+						// Cria os sprites (tiles)
+						var sprites = new Sprites();
+						sprites.create();
+				
+						// Carrega as configurações globais do jogo
+						gameContainer['conf'] = new Config({});
+					
+					...
+             ]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Inicializando o jogo: /src/game.js (cont.)</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	...
+            	
+            	//loading screen - é exibida enquanto os assets são carregados
+				Crafty.scene("loading", function() {
+		            // limpa cenas e elementos de interface
+		            sc = []; infc = [];   
+		
+					var loadingText = Crafty.e("2D, DOM, Text")
+							.attr({w: 500, h: 20, x: ((Crafty.viewport.width) / 2), y: (Crafty.viewport.height / 2), z: 2})
+							.text('Carregando...')
+							.css({fontFamily: 'Impact', fontSize: '12px', color: '#FFF'});
+				
+					// Criando a lista de assets com as imagens
+					var assets = sprites.getPaths();
+					
+				...
+           	]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Inicializando o jogo: /src/game.js (cont.)</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+					...
+					// A função load recebe uma array de assets e uma função callback executada ao completar o carregamento
+					Crafty.load(assets, function() {
+						// array with local components
+		                var elements = [
+		                    "src/components/MouseHover.js?v="+version+"",
+		                    "src/entities/base/BaseEntity.js?v="+version+"",
+			    		];
+		
+		    			//quando todos os arquivos estiverem carregados, executa a cena especificada no gameContainer.scene
+		    			require(elements, function() {	   
+		    				loadingText.destroy();
+		    				if (gameContainer.scene != undefined) {
+		    					Crafty.scene(gameContainer.scene);
+		    				}
+		    			});
+		    		},
+					function(e) {
+						loadingText.text('Carregando ('+(e.percent.toFixed(0))+'%)');
+					});
+				}); // fecha a definição da cena 'loading'
+           	]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Inicializando o jogo: /src/game.js (cont.)</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+				...
+						// Por último, carrega todos os arquivos que descrevem as cenas
+						var scenes = [
+							"src/scenes/start.js?v="+version+"",
+							"src/scenes/instructions.js?v="+version+"",
+							"src/scenes/main.js?v="+version+"",
+							"src/scenes/gameover.js?v="+version+""
+						];
+						
+						require(scenes, function(){});
+						
+						// Executa a cena 'loading'
+						Crafty.scene("loading");
+					});
+				};
+           	]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section>
+          	<button type="button" id="game-step1" class="button">Executar</button>
+          	<div class="game-step1 iframe"></div> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Criando entidades</h2>
+          	</header> 
+            <ul class="bulleted">
+            	<li>Listener do Crafty para eventos: <code class="inline-code">.bind(String event, Function callback)</code></li>
+            	<li>Tratamento de colisões: definindo área de colisão -> precisão vs. complexidade</li>
+            	<li>Controle de teclado</li>
+            	<li>Disparando eventos customizados</li>
+           	</ul> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Entidade - Herói: src/entities/heroi.js</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	Heroi = BaseEntity.extend({
+					defaults: {
+				        'speed' : 3,
+				    },
+				    initialize: function(){
+				    	var model = this;
+				    	var colidiu = false;
+				    	var animationStep = 0;
+				    	var entity = Crafty.e("2D, "+gameContainer.conf.get('renderType')+", Multiway, Keyboard, heroi, Mouse, Collision, Tween");
+				
+				    	entity
+				            .attr({x: 350, y: 530, z: 300})
+				            .collision(new Crafty.polygon([31,2],[24,21],[14,29],[12,23],[10,27],[10,37],[12,39],[21,39],[25,41],[25,60],[38,60],[38,41],[42,39],[51,39],[53,37],[54,27],[51,23],[49,29],[39,21],[32,2]))
+				            .multiway(model.get('speed'), {RIGHT_ARROW: 0, LEFT_ARROW: 180})
+				            .bind('Moved', moveHeroi)
+				            .bind('KeyDown', atira)
+				            .onHit("nave", ...)
+				       ...
+				       entity.origin(entity.w/2, entity.h/2);
+
+				    	model.set({'entity' : entity });
+				    } // fim do construtor
+				});
+           	]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Entidade - Herói: src/entities/heroi.js (cont.)</h2>
+          	</header> 
+            <div class="images">
+            	<img src="images/entity.png" alt="Descrição de componentes da entidade" />
+            </div>
+            <ul class="bulleted">
+            	<li>Definindo a área de colisão: precisa criar os pontos que formam o polígono da imagem</li>
+            	<li><code class="inline-code">new Crafty.polygon([31,2],[24,21],[14,29],[12,23],[10,27],[10,37],[12,39],[21,39],[25,41],[25,60],[38,60],[38,41],[42,39],[51,39],[53,37],[54,27],[51,23],[49,29],[39,21],[32,2])</code></li>
+            	<li>Ao utilizar apenas <code class="inline-code">new Crafty.polygon()</code>, ele cria por default uma área retangular. Mais simples, porém, menos preciso.</li>
+            </ul>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Entidade - Herói: src/entities/heroi.js (cont.)</h2>
+          	</header>
+          	<ul class="bulleted">
+          		<li><code class="inline-code">.onHit(String component, Function hit[, Function noHit])</code></li>
+          	</ul> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	.onHit("nave", function(hit) {
+	            	/*
+	            	 * A flag 'colidiu' permite disparar o evento apenas uma vez
+	            	 * por colisão
+	            	 */
+	            	if (!colidiu) {
+						var evt = document.createEvent("Event");
+		            	evt.initEvent("HitHeroEvent", true, true);
+		            	document.dispatchEvent(evt);
+		            	
+		            	...
+		            	
+		            	colidiu = true;
+	            	}
+		            	
+	            }, function() {
+	            	colidiu = false;
+	            })
+           	]]></script>
+           	<ul class="bulleted">
+          		<li>Crafty também possui funções para disparar eventos: <code class="inline-code">Crafty.trigger(String eventName, * data)</code></li>
+          		<li>Evento disparado por <em>trigger</em> deve ser capturado por uma entidade através do <code class="inline-code">.bind()</code></li>
+          		<li>Evento customizado criado nativamente por JS (ex.: <code class="inline-code">document.createEvent(String type)</code>) só pode ser capturado por <code class="inline-code">.addEventListener()</code></li>
+          	</ul> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Entidade - Herói: src/entities/heroi.js (cont.)</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	function atira(e) {
+	            	if(e.key == Crafty.keys['A'])
+	            	{
+						var elements = [
+		                    "src/entities/tiro.js",
+			    		];
+		
+		    			require(elements, function() {
+		    				 var tiro = new Tiro(entity);
+		    			});
+	            	}
+	            }
+           	]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Entidade - Tiro: src/entities/tiro.js</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	Tiro = BaseEntity.extend({
+					defaults: {
+				        
+				    },
+				    initialize: function(parent){
+				    	var model = this;
+				    	var disparou = false, explodiu = false;
+				    	var entity = Crafty.e("2D, "+gameContainer.conf.get('renderType')+", tiro, SpriteAnimation, Collision");
+				
+				    	entity
+				            .attr({x: ((parent.x+(parent.w/2))-8), y: ((parent.y+(parent.h/2))-8), z: 300})
+				            .collision(new Crafty.polygon([8,0],[5,3],[5,12],[3,13],[3,15],[14,15],[14,13],[12,3],[9,0]))
+				            .bind('EnterFrame', moveTiro)
+				            .onHit("nave", ...)
+				       ...
+				       entity.origin(entity.w/2, entity.h/2);
+
+				    	model.set({'entity' : entity });
+				    } // fim do construtor
+				});
+           	]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Entidade - Tiro: src/entities/tiro.js (cont.)</h2>
+          	</header> 
+            <ul class="bulleted">
+            	<li>Carregando um novo sprite com a função do Crafty: <code class="inline-code">Crafty.sprite([Number tile], String url, Object map[, Number paddingX[, Number paddingY]])</code></li>
+            	<li>Animando com sprites: <br />
+            		<code class="inline-code">.animate(String reelId, Number fromX, Number y, Number toX)</code><br />
+            		<code class="inline-code">.animate(String reelId, Number duration[, Number repeatCount])</code>
+            	</li>
+           	</ul>
+           	<div class="images">
+          		<img src="CraftyJSGame/web/images/explosion.png" />
+          	</div>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Entidade - Tiro: src/entities/tiro.js (cont.)</h2>
+          	</header>
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	.onHit("nave", function(hit) {
+	            	...
+	            	
+	            	for(i = 0; i < hit.length; i++) {
+	            		var nave = hit[i]['obj'];
+	            		
+	            		Crafty.sprite(34, "web/images/explosion.png", {
+						    explosion: [0,0]
+						});
+						
+						var explosion = Crafty.e("2D, Canvas, SpriteAnimation, explosion")
+											.attr({w: 34, h: 34, x: nave.x, y: nave.y, z: 300})
+										    .animate('explosion', 0, 0, 8) // setup animation
+										    .animate('explosion', 8, 0) // start animation
+									    
+	            		nave.destroy();
+	            	}
+	            	
+	            	this.destroy();
+	            	
+	            	var evt = document.createEvent("Event");
+	            	evt.initEvent("SpaceshipEvent", true, true);
+	            	document.dispatchEvent(evt);
+	            	
+	            })
+           	]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Entidade - Tiro: src/entities/tiro.js (cont.)</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	function moveTiro(e) {
+	            	if(this.y < 10)
+					{
+						this.destroy();
+					}
+					else
+					{
+						this.y -= 10;
+					}
+					
+					/*
+					 * Controle para disparar o evento que indica que foi realizado um tiro apenas uma vez,
+					 * caso contrário, ele irá disparar o evento durante toda a trajetória da bala
+					 * e atualizará o indicador de disparos erroneamente
+					 */
+					if(!disparou) {
+						...
+						
+						var evt = document.createEvent("Event");
+		            	evt.initEvent("ShotEvent", true, true);
+		            	document.dispatchEvent(evt);
+		            	
+		            	disparou = true;
+					}
+	            }
+           	]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Entidade - Tiro: src/entities/nave.js</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	Nave = BaseEntity.extend({
+					defaults: {
+				        'speed' : 1,
+				        'id': 'nave'
+				    },
+				    initialize: function(params){
+				    	var model = this;
+				    	var entity = Crafty.e("2D, "+gameContainer.conf.get('renderType')+", Multiway, nave, Collision");
+				
+				    	entity
+				            .attr({x: params['x'], y: params['y'], z: 300})
+				            .collision(new Crafty.polygon([30,2],[28,4],[27,9],[22,13],[15,14],[13,20],[31,57],[49,20],[47,14],[39,13],[36,9],[34,4],[31,2]))
+				            .bind('EnterFrame', moveNave)
+				        ...
+				       entity.origin(0, 0);
+
+				    	model.set({'entity' : entity });
+				    } // fim do construtor
+				});
+           	]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Entidade - Tiro: src/entities/nave.js (cont.)</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	function moveNave(e) {
+	            	if(entity.y > 600)
+					{
+						entity.y = 0;
+					}
+					else
+					{
+						entity.y += params['speed'];
+					}
+	            }
+           	]]></script> 
+           	<header>
+          		<h2>Testando: /src/scenes/main.js</h2>
+          	</header>
+           	<script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+           		Crafty.scene("main", function() {
+
+					var elements = [
+				        "src/entities/heroi.js",
+				        "src/entities/nave.js"
+				        
+					];
+					
+					//when everything is loaded, run the main scene
+					require(elements, function() {
+						
+						sc['heroi'] = new Heroi();
+						
+						sc['nave'] = new Nave();
+						
+					});
+				
+				});
+
+           	]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section>
+          	<button type="button" id="game-step2" class="button">Executar</button>
+          	<div class="game-step2 iframe"></div> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Elementos de interface</h2>
+          	</header> 
+            <ul class="bulleted">
+            	<li>Encapsulando a criação de textos e botões para o jogo</li>
+            	<li>Elementos DOM ao invés de 2D</li>
+            	<li>Movimento sprites sem animação: <code class="inline-code">.sprite(Number x, Number y, Number w, Number h)</code></li>
+            	<li>Modificando estilo: <code class="inline-code">.css(Object map)</code> ou <code class="inline-code">.css(String property, String value)</code>
+            		<ul class="bulleted">
+            			<li>As propriedades podem ser passadas em notação CSS ou JS (<code class="inline-code">text-align</code> ou <code class="inline-code">textAlign</code>)</li>
+            		</ul>
+            	</li>
+           	</ul> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Botões</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	CustomButton = BaseEntity.extend({
+					defaults: {
+				        'w' : 300,
+				        'h': 45
+				    },
+				    initialize: function(params){
+				    	var model = this;
+				    	var entity = Crafty.e("2D, DOM, Text, Mouse, btnNormal");
+				
+				    	entity
+				            .attr({x: params.x, y: params.y, z: 1000, w: model.get('w'), h: model.get('h')})
+				            .sprite(0,0,1,1)
+				            .text(params.text)
+				            .css({cursor: 'pointer', fontFamily: 'Impact', fontSize: '24px', color: '#FFF', lineHeight: '42px', textAlign: 'center'})
+				            .bind('Click', function(){
+				            	if (params['goToScene'] != undefined)
+				            	{
+				            		Crafty.scene(params['goToScene']);
+				            	}
+				            })
+				            .bind('MouseOver', function(){
+				                 this
+				                 	.css({color: '#000'})
+				                 	.sprite(0,1,1,1);
+				            })
+				            .bind('MouseOut', function(){
+				                 this
+				                 	.css({color: '#FFF'})
+				                 	.sprite(0,0,1,1);
+				            })
+				
+				    	model.set({'entity' : entity });
+				    }
+				});
+            ]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Texto</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	CustomText = BaseEntity.extend({
+					defaults: {
+				        'text' : '',
+				    },
+				    initialize: function(params){
+				    	var model = this,
+				    		entity = Crafty.e("2D, DOM, Text"),
+				    		// Se determinados parâmetros não foram especificados, define valores default
+				    		_x = params.x || 0;
+				    		_y = params.y || 0;
+				    		_w = params.w || 100;
+							_h = params.h || 100;
+							_fontSize = params.fontSize || '12';
+							_color = params.color || '#FFF';
+							_textAlign = params.textAlign || 'left';
+						
+				    	entity
+				            .attr({w: _w, h: _h, x: _x, y: _y, z: 1001})
+				            .text(params.text)
+				            .css({fontFamily: 'Impact', fontSize: _fontSize+'px', color: _color, lineHeight: _h+'px', textAlign: _textAlign});
+				
+				    	model.set({'entity' : entity});
+				    },
+				    setText: function(params){
+				    	var model = this;
+				    	model.get('entity').text(params['text']);
+				    }
+				});
+           	]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Testando: /src/scenes/main.js</h2>
+          	</header>
+          	<script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+          		Crafty.scene("main", function() {
+
+					var elements = [
+				        "src/entities/heroi.js",
+				        "src/entities/nave.js",
+        				"src/interfaces/text.js"
+					];
+					
+					//when everything is loaded, run the main scene
+					require(elements, function() {
+						
+						sc['heroi'] = new Heroi();
+						
+						sc['nave'] = new Nave({'id': 'nave', 'x': 0, 'y': 0, 'speed': 1});
+						
+						infc['placar'] 			= new CustomText({'x': 650, 'y': 10, 'w': 40, 'h': 12, 'text': 'Placar: ', 			 'fontSize': '12'});
+						infc['nivel'] 			= new CustomText({'x': 650, 'y': 30, 'w': 40, 'h': 12, 'text': 'Nível: ',  			 'fontSize': '12'});
+						infc['disparos'] 		= new CustomText({'x': 650, 'y': 50, 'w': 40, 'h': 12, 'text': 'Disparos/Acertos: ', 'fontSize': '12'});
+						
+					});
+				
+				});
+          	]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section>
+          	<button type="button" id="game-step3" class="button">Executar</button>
+          	<div class="game-step3 iframe"></div> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Criação da cena principal: /src/scenes/main.js</h2>
+          	</header> 
+            <ul class="bulleted">
+            	<li>Instanciação das entidades</li>
+            	<li>Captura de eventos</li>
+            	<li>Score: persistência de dados(<code class="inline-code">Crafty.storage.open(String gameName)</code>, <code class="inline-code">Crafty.storage.save(String key, String type, Mixed data)</code>)</li>
+           	</ul>
+           	<script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+           		Crafty.scene("main", function() {
+
+					var elements = [
+				        "src/entities/heroi.js",
+				        "src/entities/nave.js",
+				        "src/interfaces/screentext.js",
+				        "src/interfaces/text.js"
+				        
+					];
+					
+					//when everything is loaded, run the main scene
+					require(elements, function() {
+						...
+					});
+
+				});
+           	]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+          	<header>
+          		<h2>Criação da cena principal: /src/scenes/main.js (cont.)</h2>
+          	</header>
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	...
+            	/* Variáveis que controlam a quantidade de naves no exercito */
+				var exercito = 0, numNaves = 8;
+				/* Variáveis que controlam os parâmetros do nível do jogo */
+				var nivel = 1, acertos = 0, disparos = 0, pontos = 0, valorAcerto = 0, naveSpeed = 1;
+				/* Array que controla a quantidade de vidas do jogador */
+				lifes = [], lifes_remaining = 0;
+				
+				sc['heroi'] 			= new Heroi();
+				infc['placar'] 			= new CustomText({'x': 650, 'y': 10, 'w': 40, 'h': 12, 'text': 'Placar: ', 			 'fontSize': '12'});
+				infc['placar_score'] 	= new CustomText({'x': 690, 'y': 10, 'w': 40, 'h': 12, 'text': pontos.toString(),    'fontSize': '12'});
+				infc['nivel'] 			= new CustomText({'x': 650, 'y': 30, 'w': 40, 'h': 12, 'text': 'Nível: ',  			 'fontSize': '12'});
+				infc['nivel_num'] 		= new CustomText({'x': 690, 'y': 30, 'w': 40, 'h': 12, 'text': nivel.toString(),     'fontSize': '12'});
+				infc['disparos'] 		= new CustomText({'x': 650, 'y': 50, 'w': 40, 'h': 12, 'text': 'Disparos/Acertos: ', 'fontSize': '12'});
+				infc['disparos_num'] 	= new CustomText({'x': 750, 'y': 50, 'w': 40, 'h': 12, 'text': disparos+'/'+acertos, 'fontSize': '12'});
+				...
+           	]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+          	<header>
+          		<h2>Criação da cena principal: /src/scenes/main.js (cont.)</h2>
+          	</header>
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	...
+            	function criaExercito(numNaves, naveSpeed) {
+					exercito = 0;
+					
+					for(var i = 0, posX = 0, posY = 0; i < numNaves; i++, exercito++, posX += 100) {
+						/* Se o índice da nave for múltiplo de 8, redefine os valores de posicionamento
+						 * para que as próximas naves fiquem em uma nova linha */
+						if ((i % 8) == 0)
+						{
+							posX = 20;
+							if (i > 0)
+							{
+								posY += 80;
+							}
+						}
+						
+						sc['nave_'+i] = new Nave({'id': 'nave_'+i, 'x': posX, 'y': posY, 'speed': naveSpeed});
+					}
+				}
+            	...
+            ]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+          	<header>
+          		<h2>Criação da cena principal: /src/scenes/main.js (cont.)</h2>
+          	</header>
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	...
+            	function setLevel(_level, _numNaves, _valorPonto, _naveSpeed) {
+					this.nivel = _level;
+					this.numNaves = _numNaves;
+					this.valorAcerto = _valorPonto;
+					this.naveSpeed = _naveSpeed;
+					
+					infc['nivel_num'].setText({'text': this.nivel});
+					
+					infc['level_tween'] = new ScreenText({'text': 'Nível '+this.nivel});
+					
+					criaExercito(_numNaves, _naveSpeed);
+				}
+            	...
+            ]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+          	<header>
+          		<h2>Criação da cena principal: /src/scenes/main.js (cont.)</h2>
+          	</header>
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	...
+            	function setLifes(_amount) {
+					var _w = 16, _h = 16;
+					for (var i = 0, posX = 10, posY = 10; i < _amount; i++, posX += 21) {
+						lifes[i] = Crafty.e("2D, "+gameContainer.conf.get('renderType')+", DOM, Image, vida")
+				            				.attr({w: _w, h: _h, x: posX, y: posY, z: 1000})
+				            				.image("web/images/life.png");
+				        
+						/* Fix - a largura e altura são definidas corretamente através do método attr() apenas no primeiro item, nos demais
+						 * é preciso definir a largura e altura individualmente */
+						lifes[i].w = _w;
+						lifes[i].h = _h;
+					}
+					this.lifes_remaining = _amount;
+				}
+            	...
+            ]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+          	<header>
+          		<h2>Criação da cena principal: /src/scenes/main.js (cont.)</h2>
+          	</header>
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	...
+            	document.addEventListener("ShotEvent", function() {
+					++disparos;
+					atualizaDisparos();
+				}, false);
+				
+				document.addEventListener("SpaceshipEvent", function() {
+					--exercito;
+					++acertos;
+					pontos += valorAcerto;
+					
+					atualizaPlacar();
+					atualizaDisparos();
+					
+					if(exercito == 0) {
+						if (nivel == 3) {
+							gameContainer.conf.set({'gameOverStatus': "Você ganhou =)"});
+							Crafty.scene("gameover");
+						} else {
+							setLevel(++nivel, (numNaves + 8), (valorAcerto * 2), (naveSpeed + 0.5));
+						}
+					}
+				}, false);
+            	...
+            ]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+          	<header>
+          		<h2>Criação da cena principal: /src/scenes/main.js (cont.)</h2>
+          	</header>
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	...
+            	document.addEventListener("HitHeroEvent", function() {
+					--lifes_remaining;
+					if (lifes_remaining < 0)
+					{
+						gameContainer.conf.set({'gameOverStatus': "Você perdeu =("});
+						Crafty.scene("gameover");
+					} else {
+						lifes[lifes_remaining].destroy();
+					}
+				}, false);
+				
+				document.addEventListener("keydown", function(e) {
+					if(e.key == Crafty.keys['SPACE']) {
+						if (!Crafty.isPaused())
+						{
+							infc['pause_tween'] = new ScreenText({'text': 'Pause II', 'pause': true});
+						}
+						else
+						{
+							infc['pause_tween'].remove();
+							Crafty.pause();
+						}
+					}
+				},false);
+            	...
+            ]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+          	<header>
+          		<h2>Criação da cena principal: /src/scenes/main.js (cont.)</h2>
+          	</header>
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	...
+            	function atualizaPlacar() {
+					infc['placar_score'].setText({'text': pontos.toString()});
+					Crafty.storage.save('Placar', 'save', pontos);
+				}
+				
+				function atualizaDisparos() {
+					infc['disparos_num'].setText({'text': disparos+'/'+acertos})
+				}
+				
+				Crafty.storage.open('SpaceInvaders');
+				setLevel(1, 8, 10, 1);
+				setLifes(3);
+				Crafty.storage.save('Placar', 'save', pontos);
+				...
+            ]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section>
+          	<button type="button" id="game-step4" class="button">Executar</button>
+          	<div class="game-step4 iframe"></div>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Criando a tela inicial: /src/scenes/start.js</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	Crafty.scene("start", function() {
+
+					var elements = [
+				        "src/interfaces/screentext.js",
+				        "src/interfaces/button.js"
+					];
+					
+					//when everything is loaded, run the main scene
+					require(elements, function() {
+						
+						var screenText = new ScreenText({'text': 'Damn Aliens!', 'fadeOut': false});
+						
+						var btnStart = new CustomButton({'x': 250, 'y': 300, 'text': "Iniciar Jogo", 'goToScene': "main"});
+						
+						...
+				   			
+					});
+				
+				});
+           	]]></script> 
+           	<header>
+          		<h2>Mudança no index.html</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	 gameContainer = {
+				      env : 'dev', // ambiente
+				      gameVersion : '0.0.1', // versão (usado para controle de cache)
+				      scene : 'start' // cena inicial após a tela de loading
+				  }
+           	]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section>
+          	<button type="button" id="game-step5" class="button">Executar</button>
+          	<div class="game-step5 iframe"></div>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Criando a tela final: /src/scenes/gameover.js</h2>
+          	</header> 
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	Crafty.scene("gameover", function() {
+
+					var elements = [
+				        "src/interfaces/screentext.js",
+				        "src/interfaces/button.js"
+					];
+					
+					//when everything is loaded, run the main scene
+					require(elements, function() {
+						
+						var screenText = new ScreenText({'text': gameContainer.conf.get('gameOverStatus'), 'fadeOut': false});
+						
+						var pontuacao = Crafty.storage.load('Placar', 'save', function(data){
+							var txtScore = new CustomText({'x': 250, 'y': 300, 'w': 300, 'h': 42, 'text': 'Sua pontuação: '+data, 'fontSize': '14', 'textAlign': 'center'});
+						});
+						
+						var btnStart = new CustomButton({'x': 250, 'y': 355, 'text': "Reiniciar Jogo", 'goToScene': "main"});
+						
+						...
+					});
+				
+				});
+           	]]></script> 
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section>
+          	<button type="button" id="game-step6" class="button">Executar</button>
+          	<div class="game-step6 iframe"></div>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Inserindo sons</h2>
+          	</header>
+          	<ul class="bulleted">
+          		<li><code class="inline-code">Crafty.audio.add(String id, String url)</code></li>
+          		<li><code class="inline-code">Crafty.audio.add(String id, Array urls)</code></li>
+          		<li><code class="inline-code">Crafty.audio.add(Object map)</code></li>
+          		<li><code class="inline-code">Crafty.audio.play(String id[, Number repeatCount[, Number volume]])</code></li>
+          		<li><code class="inline-code">Crafty.audio.stop([String id])</code></li>
+          		<li>Listando os arquivos a serem carregados na lista de assets:
+          			<ul class="bulleted">
+          				<li>/src/game.js</li>
+          			</ul>
+          		</li>
+          	</ul>
+          	<script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+          		// Criando a lista de assets com as imagens
+				var assets = sprites.getPaths();
+				// Adicionando os arquivos de áudio à lista de assets
+				assets.push("web/audio/bullet_boom.mp3", "web/audio/bullet.mp3", "web/audio/start.mp3", "web/audio/game.mp3","web/audio/game2.mp3", "web/audio/game_over.mp3");
+          	]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Inserindo sons (cont.)</h2>
+          	</header>
+          	<ul class="bulleted">
+          		<li>/src/entities/tiro.js
+          			<ul class="bulleted">
+          				<li>Dentro da função de hit</li>
+          			</ul>
+          		</li>
+          	</ul>
+            <script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+            	.onHit("nave", function(hit) {
+            	
+	            	/* A flag garante que o som será executado apenas uma vez por colisão
+	            	 * caso contrário seria executada durante toda a trajetória dentro
+	            	 * do polígono do elemento colidido */
+	            	if (!explodiu)
+	            	{
+	            		Crafty.audio.add("boom", "web/audio/bullet_boom.mp3");
+	            		Crafty.audio.play("boom",1);
+	            		
+	            		explodiu = true;
+	            	}
+	            	
+	            	...
+	            }, function() {
+	            	explodiu = false;
+	            })
+           	]]></script>
+           	<ul class="bulleted">
+	  			<ul class="bulleted">
+	  				<li>Dentro da função moveTiro</li>
+	  			</ul>
+          	</ul>
+          	<script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+          		if(!disparou) {
+					Crafty.audio.add("bullet", "web/audio/bullet.mp3");
+					Crafty.audio.play("bullet",1);
+					...
+				}
+          	]]></script>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Inserindo sons (cont.)</h2>
+          	</header>
+          	<ul class="bulleted">
+          		<li>/src/scenes/start.js</li>
+          	</ul>
+          	<script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+          		...
+          		Crafty.audio.add("start", "web/audio/start.mp3");
+        		Crafty.audio.play("start",-1);
+        		...
+          	]]></script>
+          	<ul class="bulleted">
+          		<li>/src/scenes/main.js</li>
+          	</ul>
+          	<script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+          		...
+          		Crafty.audio.stop(); // Necessário parar o som da tela inicial
+				Crafty.audio.add('ambient', "web/audio/game2.mp3");
+		        Crafty.audio.play("ambient",-1);
+		        ...
+          	]]></script>
+          	<ul class="bulleted">
+          		<li>/src/scenes/gameover.js</li>
+          	</ul>
+          	<script type="syntaxhighlighter" class="brush: js;"><![CDATA[
+          		...
+          		Crafty.audio.stop();
+				Crafty.audio.add("gameover", "web/audio/game_over.mp3");
+		        Crafty.audio.play("gameover",-1);
+		        ...
+          	]]></script>
+          </section>
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>To-do</h2>
+          	</header>
+          	<ul class="bulleted">
+          		<li>Resolver bug ao reiniciar o jogo depois de ter perdido o jogo anterior</li>
+          		<li>Otimizar o código: criar componentes para funcionalidade comuns, como movimentos</li>
+          		<li><span class="off-comment">Inserir/criar componente que permite transições de tween</span> - Já existe! Criei o component <a href="https://github.com/talitapagani/craftytweener">Tweener</a>, disponível no site do <a href="http://craftycomponents.com/components/single/22/tweener">CraftyComponents</a></li>
+          	</ul>
+ 		 </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section> 
+            <header>
+          		<h2>Resumo da ópera</h2>
+          	</header>
+          	<ul class="bulleted">
+          		<li>48 arquivos, 11 pastas, ~7,9MB</li>
+          		<li>Tempo de desenvolvimento do jogo: ~60h</li>
+          		<li>Processamento: picos de 16% de uso de CPU</li>
+          		<li>Memória: ~30MB</li>
+          		<li>Nível de complexidade de desenvolvimento: Tenso (<span class="off-comment">mas só no começo</span>)</li>
+          	</ul>
+ 		 </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section class="middle"> 
+            <h2>Baixe/Fork a versão mais recente do jogo em:</h2> 
+            <p><a href="https://github.com/talitapagani/DamnAliens">https://github.com/talitapagani/DamnAliens</a></p>
+          </section> 
+        </div>
+        
+        <div class="slide reduced"> 
+          <section class="middle"> 
+            <h2>Desenvolvimento de Jogos com HTML5</h2> 
+            <p>Utilizando a engine CraftyJS</p>
+            <p>Talita Pagani</p>
+            <p><small><a href="http://twitter.com/talitapagani">@talitapagani</a> / <a href="http://github.com/talitapagani">github.com/talitapagani</a></small></p>
+          </section> 
+        </div> 
+      </div> <!-- slides --> 
+ 
+    </div> <!-- presentation --> 
+ 
+    <script type="text/javascript" src="scripts/slides.js"></script>
+    <script type="text/javascript">
+    	$(".button").click(function(){
+    		var id = $(this).attr('id');
+    		$("."+id).html("<iframe src='"+id+"/index.html'></iframe>");
+    	});
+    </script>
+ 
+    <!--[if lt IE 9]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+    <script>CFInstall.check({ mode: "overlay" });</script>
+    <![endif]--> 
+    
+  </body> 
+</html>
