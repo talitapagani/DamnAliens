@@ -5,7 +5,7 @@ Damn Aliens! is an online game built with CraftyJS' game engine. It uses several
 
 ##Compatibility
 
-Currently the game is fully functional only on Chrome 20.x. There are some issues with IndexedDB and audio API on Firefox and performance issues on Internet Explorer.
+Currently the game is fully functional only on Chrome 20.x. There are some issues with audio API on Firefox and Internet Explorer.
 
 ##Credits
 
